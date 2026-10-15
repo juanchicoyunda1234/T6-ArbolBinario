@@ -64,5 +64,15 @@ Casos de prueba obligatorios (opcion 8):
 | Insertar en posicion ocupada | IllegalStateException | La posicion izquierda de FISEI ya esta ocupada por SOFTWARE. |
 | Grado de FISEI y SOFTWARE | 2 y 2 | 2 y 2 |
 
+## Capturas
+
+Ejecucion del menu (opciones 1 a 7):
+
+![Ejecucion del menu](capturas/ejecucion-menu.png)
+
+Casos de prueba (opcion 8):
+
+![Casos de prueba](capturas/casos-de-prueba.png)
+
 ## Autor
 Chico Yunda Juan Carlos
