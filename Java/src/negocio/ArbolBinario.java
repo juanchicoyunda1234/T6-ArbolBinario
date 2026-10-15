@@ -52,6 +52,11 @@ public class ArbolBinario<T> {
         return nuevo;
     }
 
+    public Nodo<T> buscar(T dato) {
+
+        return buscar(raiz, dato);
+    }
+
     public int contarNodos() {
 
         return contarNodos(raiz);
@@ -65,6 +70,16 @@ public class ArbolBinario<T> {
     public int altura() {
 
         return altura(raiz);
+    }
+
+    public void mostrarArbol() {
+
+        if (esVacio()) {
+            System.out.println("(arbol vacio)");
+            return;
+        }
+        System.out.println(raiz);
+        mostrarHijos(raiz, "");
     }
 
     private void validarPadre(Nodo<T> padre) {
@@ -89,6 +104,21 @@ public class ArbolBinario<T> {
             return true;
         }
         return contiene(actual.getIzquierdo(), buscado) || contiene(actual.getDerecho(), buscado);
+    }
+
+    private Nodo<T> buscar(Nodo<T> actual, T dato) {
+
+        if (actual == null) {
+            return null;
+        }
+        if (actual.getDato().equals(dato)) {
+            return actual;
+        }
+        Nodo<T> enIzquierdo = buscar(actual.getIzquierdo(), dato);
+        if (enIzquierdo != null) {
+            return enIzquierdo;
+        }
+        return buscar(actual.getDerecho(), dato);
     }
 
     private int contarNodos(Nodo<T> actual) {
@@ -116,5 +146,21 @@ public class ArbolBinario<T> {
             return -1;
         }
         return 1 + Math.max(altura(actual.getIzquierdo()), altura(actual.getDerecho()));
+    }
+
+    private void mostrarHijos(Nodo<T> padre, String prefijo) {
+
+        Nodo<T> izquierdo = padre.getIzquierdo();
+        Nodo<T> derecho = padre.getDerecho();
+
+        if (izquierdo != null) {
+            boolean ultimo = derecho == null;
+            System.out.println(prefijo + (ultimo ? "`-- " : "|-- ") + "(I) " + izquierdo);
+            mostrarHijos(izquierdo, prefijo + (ultimo ? "    " : "|   "));
+        }
+        if (derecho != null) {
+            System.out.println(prefijo + "`-- " + "(D) " + derecho);
+            mostrarHijos(derecho, prefijo + "    ");
+        }
     }
 }
