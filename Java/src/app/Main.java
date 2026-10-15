@@ -32,6 +32,7 @@ public class Main {
         System.out.println("5. Consultar la altura");
         System.out.println("6. Consultar el grado de un nodo");
         System.out.println("7. Verificar si un nodo es hoja");
+        System.out.println("8. Ejecutar casos de prueba");
         System.out.println("0. Salir");
     }
 
@@ -60,6 +61,9 @@ public class Main {
                 break;
             case 7:
                 consultarHoja();
+                break;
+            case 8:
+                ejecutarCasosDePrueba();
                 break;
             case 0:
                 break;
@@ -113,6 +117,51 @@ public class Main {
             System.out.println("No existe un nodo llamado \"" + nombre + "\".");
         }
         return nodo;
+    }
+
+    private static void ejecutarCasosDePrueba() {
+
+        System.out.println();
+        System.out.println("===== CASOS DE PRUEBA =====");
+
+        ArbolBinario<String> vacio = new ArbolBinario<>();
+        System.out.println("[1] Arbol vacio");
+        verificar("esVacio", true, vacio.esVacio());
+        verificar("nodos", 0, vacio.contarNodos());
+        verificar("altura", -1, vacio.altura());
+
+        ArbolBinario<String> unico = new ArbolBinario<>();
+        unico.crearRaiz("UNIVERSIDAD");
+        System.out.println("[2] Arbol con un solo nodo");
+        verificar("nodos", 1, unico.contarNodos());
+        verificar("hojas", 1, unico.contarHojas());
+        verificar("altura", 0, unico.altura());
+
+        ArbolBinario<String> inicial = construirArbolInicial();
+        System.out.println("[3] Arbol inicial");
+        inicial.mostrarArbol();
+        verificar("nodos", 9, inicial.contarNodos());
+        verificar("hojas", 5, inicial.contarHojas());
+        verificar("altura", 3, inicial.altura());
+
+        System.out.println("[4] Insertar un hijo en una posicion ocupada");
+        try {
+            inicial.agregarIzquierdo(inicial.buscar("FISEI"), "NUEVO");
+            System.out.println("  FALLA: no se lanzo la excepcion esperada.");
+        } catch (IllegalStateException e) {
+            System.out.println("  OK: " + e.getMessage());
+        }
+        verificar("nodos tras el intento", 9, inicial.contarNodos());
+
+        System.out.println("[5] Grado de FISEI y SOFTWARE");
+        verificar("grado FISEI", 2, inicial.buscar("FISEI").grado());
+        verificar("grado SOFTWARE", 2, inicial.buscar("SOFTWARE").grado());
+    }
+
+    private static void verificar(String descripcion, Object esperado, Object obtenido) {
+
+        String estado = esperado.equals(obtenido) ? "OK" : "FALLA";
+        System.out.println("  " + estado + " - " + descripcion + ": esperado=" + esperado + ", obtenido=" + obtenido);
     }
 
     private static int leerEntero(String mensaje) {
