@@ -57,6 +57,11 @@ public class ArbolBinario<T> {
         return contarNodos(raiz);
     }
 
+    public int contarHojas() {
+
+        return contarHojas(raiz);
+    }
+
     private void validarPadre(Nodo<T> padre) {
 
         if (esVacio()) {
@@ -87,5 +92,16 @@ public class ArbolBinario<T> {
             return 0;
         }
         return 1 + contarNodos(actual.getIzquierdo()) + contarNodos(actual.getDerecho());
+    }
+
+    private int contarHojas(Nodo<T> actual) {
+
+        if (actual == null) {
+            return 0;
+        }
+        if (actual.esHoja()) {
+            return 1;
+        }
+        return contarHojas(actual.getIzquierdo()) + contarHojas(actual.getDerecho());
     }
 }
