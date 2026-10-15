@@ -29,4 +29,24 @@ public class ArbolBinario<T> {
         raiz = new Nodo<>(dato);
         return raiz;
     }
+
+    public Nodo<T> agregarIzquierdo(Nodo<T> padre, T dato) {
+
+        if (padre.getIzquierdo() != null) {
+            throw new IllegalStateException("La posicion izquierda de " + padre + " ya esta ocupada por " + padre.getIzquierdo() + ".");
+        }
+        Nodo<T> nuevo = new Nodo<>(dato);
+        padre.setIzquierdo(nuevo);
+        return nuevo;
+    }
+
+    public Nodo<T> agregarDerecho(Nodo<T> padre, T dato) {
+
+        if (padre.getDerecho() != null) {
+            throw new IllegalStateException("La posicion derecha de " + padre + " ya esta ocupada por " + padre.getDerecho() + ".");
+        }
+        Nodo<T> nuevo = new Nodo<>(dato);
+        padre.setDerecho(nuevo);
+        return nuevo;
+    }
 }
