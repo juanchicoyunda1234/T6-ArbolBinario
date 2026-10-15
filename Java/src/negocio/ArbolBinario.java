@@ -62,6 +62,11 @@ public class ArbolBinario<T> {
         return contarHojas(raiz);
     }
 
+    public int altura() {
+
+        return altura(raiz);
+    }
+
     private void validarPadre(Nodo<T> padre) {
 
         if (esVacio()) {
@@ -103,5 +108,13 @@ public class ArbolBinario<T> {
             return 1;
         }
         return contarHojas(actual.getIzquierdo()) + contarHojas(actual.getDerecho());
+    }
+
+    private int altura(Nodo<T> actual) {
+
+        if (actual == null) {
+            return -1;
+        }
+        return 1 + Math.max(altura(actual.getIzquierdo()), altura(actual.getDerecho()));
     }
 }
