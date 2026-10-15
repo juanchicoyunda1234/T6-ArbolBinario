@@ -32,6 +32,7 @@ public class ArbolBinario<T> {
 
     public Nodo<T> agregarIzquierdo(Nodo<T> padre, T dato) {
 
+        validarPadre(padre);
         if (padre.getIzquierdo() != null) {
             throw new IllegalStateException("La posicion izquierda de " + padre + " ya esta ocupada por " + padre.getIzquierdo() + ".");
         }
@@ -42,11 +43,36 @@ public class ArbolBinario<T> {
 
     public Nodo<T> agregarDerecho(Nodo<T> padre, T dato) {
 
+        validarPadre(padre);
         if (padre.getDerecho() != null) {
             throw new IllegalStateException("La posicion derecha de " + padre + " ya esta ocupada por " + padre.getDerecho() + ".");
         }
         Nodo<T> nuevo = new Nodo<>(dato);
         padre.setDerecho(nuevo);
         return nuevo;
+    }
+
+    private void validarPadre(Nodo<T> padre) {
+
+        if (esVacio()) {
+            throw new IllegalStateException("El arbol esta vacio: cree primero la raiz.");
+        }
+        if (padre == null) {
+            throw new IllegalArgumentException("El nodo padre no puede ser nulo.");
+        }
+        if (!contiene(raiz, padre)) {
+            throw new IllegalArgumentException("El nodo " + padre + " no pertenece a este arbol.");
+        }
+    }
+
+    private boolean contiene(Nodo<T> actual, Nodo<T> buscado) {
+
+        if (actual == null) {
+            return false;
+        }
+        if (actual == buscado) {
+            return true;
+        }
+        return contiene(actual.getIzquierdo(), buscado) || contiene(actual.getDerecho(), buscado);
     }
 }
