@@ -16,6 +16,23 @@ public class Nodo<T> {
         this.derecho = null;
     }
 
+    public boolean esHoja() {
+
+        return izquierdo == null && derecho == null;
+    }
+
+    public int grado() {
+
+        int hijos = 0;
+        if (izquierdo != null) {
+            hijos++;
+        }
+        if (derecho != null) {
+            hijos++;
+        }
+        return hijos;
+    }
+
     public T getDato() {
 
         return dato;
