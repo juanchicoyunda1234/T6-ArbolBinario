@@ -30,6 +30,8 @@ public class Main {
         System.out.println("3. Consultar el numero de nodos");
         System.out.println("4. Consultar el numero de hojas");
         System.out.println("5. Consultar la altura");
+        System.out.println("6. Consultar el grado de un nodo");
+        System.out.println("7. Verificar si un nodo es hoja");
         System.out.println("0. Salir");
     }
 
@@ -37,6 +39,7 @@ public class Main {
 
         switch (opcion) {
             case 1:
+                arbol = construirArbolInicial();
                 System.out.println("Arbol inicial creado.");
                 break;
             case 2:
@@ -52,11 +55,64 @@ public class Main {
             case 5:
                 System.out.println("Altura (en aristas): " + arbol.altura());
                 break;
+            case 6:
+                consultarGrado();
+                break;
+            case 7:
+                consultarHoja();
+                break;
             case 0:
                 break;
             default:
                 System.out.println("Opcion invalida.");
         }
+    }
+
+    private static ArbolBinario<String> construirArbolInicial() {
+
+        ArbolBinario<String> nuevo = new ArbolBinario<>();
+
+        Nodo<String> universidad = nuevo.crearRaiz("UNIVERSIDAD");
+        Nodo<String> fisei = nuevo.agregarIzquierdo(universidad, "FISEI");
+        Nodo<String> dide = nuevo.agregarDerecho(universidad, "DIDE");
+        Nodo<String> software = nuevo.agregarIzquierdo(fisei, "SOFTWARE");
+        nuevo.agregarDerecho(fisei, "TI");
+        nuevo.agregarIzquierdo(dide, "INVEST.");
+        nuevo.agregarDerecho(dide, "VINCULACION");
+        nuevo.agregarIzquierdo(software, "NIVEL1");
+        nuevo.agregarDerecho(software, "NIVEL3");
+
+        return nuevo;
+    }
+
+    private static void consultarGrado() {
+
+        Nodo<String> nodo = pedirNodo();
+        if (nodo != null) {
+            System.out.println("Grado de " + nodo + ": " + nodo.grado());
+        }
+    }
+
+    private static void consultarHoja() {
+
+        Nodo<String> nodo = pedirNodo();
+        if (nodo != null) {
+            System.out.println(nodo + (nodo.esHoja() ? " es una hoja." : " no es una hoja."));
+        }
+    }
+
+    private static Nodo<String> pedirNodo() {
+
+        if (arbol.esVacio()) {
+            System.out.println("El arbol esta vacio. Cree primero el arbol inicial (opcion 1).");
+            return null;
+        }
+        String nombre = leerTexto("Nombre del nodo: ").toUpperCase();
+        Nodo<String> nodo = arbol.buscar(nombre);
+        if (nodo == null) {
+            System.out.println("No existe un nodo llamado \"" + nombre + "\".");
+        }
+        return nodo;
     }
 
     private static int leerEntero(String mensaje) {
